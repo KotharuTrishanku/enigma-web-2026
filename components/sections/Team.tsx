@@ -99,7 +99,7 @@ const teamData: TeamData = {
         bio: "Focusing on vulnerability analysis, penetration testing, and competitive CTF challenges.",
       },
       coreMembers: [
-        { id: "cyber-c1", name: "Hemanth", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691788/Hemanth.heic", linkedin: "https://linkedin.com" },
+        { id: "cyber-c1", name: "Hemanth", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791714980/Hemanth.jpg", linkedin: "https://linkedin.com" },
         { id: "cyber-c2", name: "Prajwal", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691790/Prajwal.jpg", linkedin: "https://linkedin.com" },
         { id: "cyber-c3", name: "Hanvitha", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691789/Hanvitha.jpg", linkedin: "https://linkedin.com" },
         { id: "cyber-c4", name: "Pardhu", role: "Core Member", image:"https://res.cloudinary.com/qkvtxvth/image/upload/v1791691790/Pardhu.jpg", linkedin: "https://linkedin.com" },
