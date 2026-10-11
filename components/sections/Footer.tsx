@@ -66,11 +66,10 @@ const socialLinks = [
 
 export default function FooterSection() {
   return (
-    <footer id="footer" className="relative max-w-7xl mx-auto px-2 sm:px-8 pt-16 pb-12 z-10">
-      {/* Quote text lines allow full grid warping & double-click pulse */}
-      <div className="text-center space-y-3 mb-12 sm:mb-16 max-w-3xl mx-auto px-4">
+    <footer id="socials" className="relative max-w-7xl mx-auto px-2 sm:px-8 pt-16 pb-12 z-10">
+     <div className="text-center space-y-3 mb-12 sm:mb-16 max-w-3xl mx-auto px-4">
         <p className="text-sm sm:text-base md:text-lg text-lime-600 font-semibold font-mono leading-relaxed tracking-wide">
-          Chaos Follows Wherever you stride to...
+          Chaos Follows Wherever you <span className = "text-lime-800">stride...</span>
           Though, <span className="text-lime-400">Time Heals Everything</span>  
         </p>
         <p className="text-sm sm:text-base md:text-lg text-lime-200 font-semibold font-mono leading-relaxed tracking-wide">
@@ -78,8 +77,6 @@ export default function FooterSection() {
         </p>
       </div>
 
-
-      
       <motion.div
         id="footer-card"
         initial={{ opacity: 0, y: 20 }}
@@ -125,7 +122,7 @@ export default function FooterSection() {
         </div>
 
         <div className="pt-8 text-center">
-          <p className="sm:text- text-gray-500 font-mono tracking-wider">
+          <p className="text-gray-500 font-mono tracking-wider">
             &copy; 2026 ENIGMA Club. All Rights Reserved.
           </p>
         </div>

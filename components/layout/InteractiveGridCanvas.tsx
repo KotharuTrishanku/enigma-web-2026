@@ -1,10 +1,7 @@
 "use client";
 
-// use lines as "TIME HEALS EVRYTHING" or "Double-Click for a PULSE TO ENACT ORDER"
-
 import { useEffect, useRef } from "react";
 
-// interfaces for nodes
 interface Node {
   x: number;
   y: number;
@@ -66,9 +63,8 @@ export default function InteractiveGridCanvas() {
     let cols = 0;
     let rows = 0;
 
-    // Helper to check if cursor is over protected cards (only footer-card, not the text lines above it)
     const checkIsOverCard = (clientX: number, clientY: number) => {
-      const cardIds = ["about-card", "domains-card", "footer-card"];
+      const cardIds = ["about-card", "domains-card", "team-card", "footer-card"];
       return cardIds.some((id) => {
         const el = document.getElementById(id);
         if (!el) return false;
@@ -82,7 +78,7 @@ export default function InteractiveGridCanvas() {
       });
     };
 
-    // native res grid
+    // Native resolution grid initialization
     const initGrid = () => {
       const dpr = window.devicePixelRatio || 1;
       width = window.innerWidth;
@@ -121,18 +117,16 @@ export default function InteractiveGridCanvas() {
 
     initGrid();
 
-    // events
+    // Event listeners
     const handleResize = () => initGrid();
     window.addEventListener("resize", handleResize);
 
     const handleMouseMove = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
       const isOverUI = target?.closest("header, nav, a, button, [role='button']") !== null;
-
       const isOverCard = checkIsOverCard(e.clientX, e.clientY);
 
       if (mouse.lastX !== -9999) {
-        //for no warp on other components
         mouse.vx = (isOverUI || isOverCard) ? 0 : e.clientX - mouse.lastX;
         mouse.vy = (isOverUI || isOverCard) ? 0 : e.clientY - mouse.lastY;
       }
@@ -143,7 +137,6 @@ export default function InteractiveGridCanvas() {
       mouse.lastY = e.clientY;
     };
 
-    // for pulse
     const handleDblClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
       const isOverUI = target?.closest("header, nav, a, button, [role='button']") !== null;
@@ -157,19 +150,18 @@ export default function InteractiveGridCanvas() {
         y: e.clientY,
         radius: 0,
         maxRadius: maxScreenDist * 1.2,
-        speed: 18,
+        speed: 19,
       });
     };
 
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("dblclick", handleDblClick);
 
-    // main rndr loop
+    // Main render loop
     const render = () => {
       ctx.fillStyle = "#000000";
       ctx.fillRect(0, 0, width, height);
 
-      //delay
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
           const node = nodes[r][c];
@@ -212,7 +204,7 @@ export default function InteractiveGridCanvas() {
       ctx.fillStyle = `rgba(255, 255, 162, ${GRID_BASE_ALPHA})`;
       ctx.fillRect(0, 0, width, height);
 
-      // cursor spotlight glow for stride
+      // Cursor spotlight glow
       if (mouse.x > -1000) {
         const glowGradient = ctx.createRadialGradient(
           mouse.x,
@@ -248,7 +240,6 @@ export default function InteractiveGridCanvas() {
           continue;
         }
 
-        //wave
         const innerR = Math.max(0, p.radius - PULSE_RING_WIDTH / 2);
         const outerR = p.radius + PULSE_RING_WIDTH / 2;
 
@@ -264,7 +255,6 @@ export default function InteractiveGridCanvas() {
         ctx.fillStyle = pulseGrad;
         ctx.fillRect(0, 0, width, height);
 
-        // outward anim
         for (let r = 0; r < rows; r++) {
           for (let c = 0; c < cols; c++) {
             const node = nodes[r][c];
@@ -305,7 +295,7 @@ export default function InteractiveGridCanvas() {
         }
       }
 
-      // Vignette at edges
+      // Organic edge vignette
       const applyOrganicVignetteStops = (grad: CanvasGradient) => {
         grad.addColorStop(0.00, "rgba(0, 0, 0, 1.0)");
         grad.addColorStop(0.20, "rgba(0, 0, 0, 0.75)");
