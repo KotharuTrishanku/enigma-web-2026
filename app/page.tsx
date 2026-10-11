@@ -9,11 +9,11 @@ import DomainsSection from "@/components/sections/Domains";
 import TeamSection from "@/components/sections/Team";
 import Footer from "@/components/sections/Footer";
 import PenguinMascot from "@/components/layout/PenguinMascot";
-
-const SECTION_IDS = ["home", "about", "domains", "team", "footer"];
+import UpcomingEventsSection from "@/components/sections/RSVP";
+import FeedbackSection from "@/components/sections/Feedback";
 
 export default function Home() {
-  const activeSection = useActiveSection(SECTION_IDS);
+  const activeSection = useActiveSection();
 
   return (
     <>
@@ -22,8 +22,10 @@ export default function Home() {
       <HeroSection />
       <AboutSection />
       <DomainsSection />
+      <UpcomingEventsSection />
       <EventsSection />
       <TeamSection />
+      <FeedbackSection />
       <Footer />
       <PenguinMascot activeSection={activeSection} />
     </>

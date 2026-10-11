@@ -13,6 +13,7 @@ interface EventItem {
 }
 
 const pastEvents: EventItem[] = [
+
   {
     id: "server-surfers",
     title: "Server Surfers",

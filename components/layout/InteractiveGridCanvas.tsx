@@ -64,7 +64,8 @@ export default function InteractiveGridCanvas() {
     let rows = 0;
 
     const checkIsOverCard = (clientX: number, clientY: number) => {
-      const cardIds = ["about-card", "domains-card", "team-card", "footer-card"];
+      // Added "feedback-card" here so the background grid warp ignores mouse movement over the feedback section
+      const cardIds = ["about-card", "domains-card", "events-card", "upcoming-card", "team-card", "feedback-card", "footer-card"];
       return cardIds.some((id) => {
         const el = document.getElementById(id);
         if (!el) return false;

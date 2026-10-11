@@ -10,7 +10,7 @@ const MASCOT_CONFIG: Record<
   home: {
     pose: "/mascot/start.svg",
     snowmanText: "Ah, welcome to ENIGMA's Stronghold, traveler!",
-    penguinText: "Let's show them around—Woahh look at the magnificent engineering in the background!",
+    penguinText: "Let's show them around — Woahh look at the magnificent engineering in the background!",
   },
   about: {
     pose: "/mascot/talk.svg",
@@ -24,8 +24,8 @@ const MASCOT_CONFIG: Record<
   },
   rsvp: {
     pose: "/mascot/talk.svg",
-    snowmanText: "Make certain you register in time, old chap.",
-    penguinText: "Don't miss out on the slots—lock it in!",
+    snowmanText: "Make certain you register in time-",
+    penguinText: "I wanna go too man, why do only humans get these",
   },
   events: {
     pose: "/mascot/look.svg",
@@ -36,6 +36,11 @@ const MASCOT_CONFIG: Record<
     pose: "/mascot/start.svg",
     penguinText: "So these are the juicy brains behind the club.",
     snowmanText: "Click on any member to peek at their Stats!",
+  },
+  feedback: {
+    pose: "/mascot/start.svg",
+    snowmanText: "Got any constructive suggestions for us or our events?",
+    penguinText: "Spill the tea! Just enter whatever you felt. You'll be Anonymous to the team",
   },
   socials: {
     pose: "/mascot/talk.svg",
