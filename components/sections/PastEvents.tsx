@@ -15,14 +15,39 @@ interface EventItem {
 const pastEvents: EventItem[] = [
 
   {
+    id: "enigmaxmolab.marimo",
+    title: "EnigmaxMolab.marimo",
+    poster: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791692490/4.png",
+    repoUrl: "",
+    gallery: [
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791295008/DSC_0359.jpg",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791294993/DSC_0372.jpg",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791294989/DSC_0338.jpg",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791294997/DSC_0375.jpg",
+    ],
+  },
+  {
+    id: "intro-session-2026",
+    title: "Intro Session 2026",
+    poster: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791692632/1.1.jpg",
+    repoUrl: "",
+    gallery: [
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791295397/DSC_0415.jpg",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791295398/DSC_0457.jpg",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791295385/DSC_0473.jpg",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791295381/DSC_0442.jpg",
+    ],
+  },
+  {
     id: "server-surfers",
     title: "Server Surfers",
     poster: "https://www.enigma-iiits.in/assets/img/portfolio/ctf1.png",
     repoUrl: "https://github.com/Enigma-IIITS",
     gallery: [
-      "https://www.enigma-iiits.in/assets/img/gallary/g2.JPG",
-      "https://www.enigma-iiits.in/assets/img/gallary/g3.JPG",
-      "https://www.enigma-iiits.in/assets/img/gallary/g4.JPG",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791694365/Screenshot_2026-10-11_100006.png",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791694363/Screenshot_2026-10-11_095953.png",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791694360/Screenshot_2026-10-11_095942.png",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791694358/Screenshot_2026-10-11_095931.png",
     ],
   },
   {
@@ -31,8 +56,10 @@ const pastEvents: EventItem[] = [
     poster: "https://www.enigma-iiits.in/assets/img/portfolio/ctf2.png",
     repoUrl: "https://github.com/Enigma-IIITS/TheMazeOfOsiris",
     gallery: [
-      "https://www.enigma-iiits.in/assets/img/gallary/g5.JPG",
-      "https://www.enigma-iiits.in/assets/img/gallary/g6.JPG",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791694386/Screenshot_2026-10-11_100734.png",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791694385/Screenshot_2026-10-11_100718.png",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791694380/Screenshot_2026-10-11_100705.png",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791694379/Screenshot_2026-10-11_100654.png",
     ],
   },
   {
@@ -41,9 +68,9 @@ const pastEvents: EventItem[] = [
     poster: "https://www.enigma-iiits.in/assets/img/portfolio/graphics.png",
     repoUrl: "https://www.linkedin.com/posts/enigmaiiits_presenting-jean-colas-prunier-activity-7165313738907009024-T8Ds/",
     gallery: [
-      "https://www.enigma-iiits.in/assets/img/gallary/g8.JPG",
-      "https://www.enigma-iiits.in/assets/img/gallary/g9.JPG",
-      "https://www.enigma-iiits.in/assets/img/gallary/g1.JPG",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791694323/Screenshot_2026-10-11_101721.png",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791694321/Screenshot_2026-10-11_101645.png",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791694320/Screenshot_2026-10-11_101700.png",
     ],
   },
   {
@@ -52,8 +79,10 @@ const pastEvents: EventItem[] = [
     poster: "https://www.enigma-iiits.in/assets/img/portfolio/dissys.png",
     repoUrl: "https://www.enigma-iiits.in/distributed-system.html",
     gallery: [
-      "https://www.enigma-iiits.in/assets/img/gallary/g1.JPG",
-      "https://www.enigma-iiits.in/assets/img/gallary/g8.JPG",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791694354/Screenshot_2026-10-11_101446.png",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791694349/Screenshot_2026-10-11_101438.png",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791694348/Screenshot_2026-10-11_101415.png",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791694345/Screenshot_2026-10-11_101402.png",
     ],
   },
   {
@@ -62,8 +91,9 @@ const pastEvents: EventItem[] = [
     poster: "https://www.enigma-iiits.in/assets/img/portfolio/crackcode.png",
     repoUrl: "https://github.com/Enigma-IIITS",
     gallery: [
-      "https://www.enigma-iiits.in/assets/img/gallary/g2.JPG",
-      "https://www.enigma-iiits.in/assets/img/gallary/g5.JPG",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791694321/Screenshot_2026-10-11_101645.png",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791694323/Screenshot_2026-10-11_101721.png",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791694320/Screenshot_2026-10-11_101700.png",
     ],
   },
   {
@@ -72,8 +102,9 @@ const pastEvents: EventItem[] = [
     poster: "https://www.enigma-iiits.in/assets/img/portfolio/ctf3.png",
     repoUrl: "https://github.com/Enigma-IIITS/dev-null",
     gallery: [
-      "https://www.enigma-iiits.in/assets/img/gallary/g3.JPG",
-      "https://www.enigma-iiits.in/assets/img/gallary/g9.JPG",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791694333/Screenshot_2026-10-11_101826.png",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791694335/Screenshot_2026-10-11_101839.png",
+      "https://res.cloudinary.com/qkvtxvth/image/upload/v1791694331/Screenshot_2026-10-11_101801.png",
     ],
   },
 ];
