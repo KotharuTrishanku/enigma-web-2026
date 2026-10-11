@@ -24,7 +24,6 @@ export default function Navbar({ activeSection = "home" }: NavbarProps) {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState<"login" | "signup">("signup");
 
-  // Get authentication state & logout function from AuthContext
   const { user, profile, logout } = useAuth();
 
   const openAuth = (mode: "login" | "signup") => {
@@ -68,7 +67,6 @@ export default function Navbar({ activeSection = "home" }: NavbarProps) {
             );
           })}
 
-          {/* Conditional Auth State Rendering */}
           {user ? (
             <div className="ml-2 flex items-center gap-2">
               <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-lime-500/10 border border-lime-400/30 text-lime-300 text-xs font-mono">
