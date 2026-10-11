@@ -6,18 +6,18 @@ import { motion, AnimatePresence } from "framer-motion";
 const carouselImages = [
   {
     src: "https://www.enigma-iiits.in/assets/img/about.jpg",
-    alt: "a",
-    caption: "a",
+    alt: "Enigma Event",
+    caption: "Enigma",
   },
   {
-    src: "https://www.enigma-iiits.in/assets/img/about.jpg",
-    alt: "b",
-    caption: "b",
+    src: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791294993/DSC_0372.jpg",
+    alt: "Enigma xMolab.Marimo" ,
+    caption: "Enigma xMolab.Marimo",
   },
   {
-    src: "https://www.enigma-iiits.in/assets/img/about.jpg",
-    alt: "c",
-    caption: "c",
+    src: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791283470/DSC_9530.jpg",
+    alt: "Snakes and Coders",
+    caption: "Snakes and Coders",
   },
 ];
 
