@@ -13,7 +13,7 @@ import PenguinMascot from "@/components/layout/PenguinMascot";
 const SECTION_IDS = ["home", "about", "domains", "team", "footer"];
 
 export default function Home() {
-  const activeSection = useActiveSection(SECTION_IDS);
+  const activeSection = useActiveSection();
 
   return (
     <>
