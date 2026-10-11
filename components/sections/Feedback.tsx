@@ -52,7 +52,6 @@ export default function FeedbackSection() {
         transition={{ duration: 0.3, ease: "easeOut" }}
         className="w-full max-w-lg rounded-3xl bg-neutral-950/90 border border-white/15 p-6 sm:p-8 relative overflow-hidden group hover:border-lime-500/40 transition-colors duration-300 shadow-2xl space-y-6"
       >
-        {/* Compact Header */}
         <div className="space-y-1">
           <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight uppercase">
             feedback
@@ -79,7 +78,6 @@ export default function FeedbackSection() {
               </div>
             )}
 
-            {/* Subject Dropdown */}
             <div className="space-y-1">
               <label className="text-[11px] font-mono text-neutral-300 uppercase tracking-wider">
                 SUBJECT

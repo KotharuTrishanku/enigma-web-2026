@@ -101,11 +101,10 @@ export default function PenguinMascot({ activeSection }: PenguinMascotProps) {
       ref={mascotRef}
       className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-2.5 pointer-events-none select-none transform-gpu will-change-transform"
     >
-      {/* Separate Speech Bubbles */}
       <AnimatePresence mode="wait">
         {isOpen && (
           <div className="flex flex-col gap-2 items-end pointer-events-auto mr-2 sm:mr-4">
-            {/* Snowman Bubble */}
+
             <motion.div
               key={`snowman-${activeSection}`}
               initial={{ opacity: 0 }}
@@ -120,7 +119,6 @@ export default function PenguinMascot({ activeSection }: PenguinMascotProps) {
               <p className="leading-snug">{currentMascot.snowmanText}</p>
             </motion.div>
 
-            {/* Penguin Bubble */}
             <motion.div
               key={`penguin-${activeSection}`}
               initial={{ opacity: 0 }}
