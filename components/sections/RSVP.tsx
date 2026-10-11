@@ -28,7 +28,7 @@ export default function UpcomingEventsSection() {
   const [errorMsg, setErrorMsg] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Fetch events live from Firestore on load
+  
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -144,7 +144,6 @@ export default function UpcomingEventsSection() {
           </p>
         </div>
 
-        {/* Events Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {loadingEvents ? (
             <p className="text-xs font-mono text-neutral-400 col-span-full text-center py-8">
@@ -160,7 +159,6 @@ export default function UpcomingEventsSection() {
                 key={event.id}
                 className="rounded-2xl bg-black/60 border border-white/15 overflow-hidden flex flex-col justify-between group/item hover:border-white/30 transition-all duration-300 shadow-lg"
               >
-                {/* Tall Poster Image Container matching Past Events */}
                 <div className="relative h-[480px] w-full overflow-hidden bg-neutral-900">
                   {event.imageUrl ? (
                     <img
@@ -175,7 +173,6 @@ export default function UpcomingEventsSection() {
                   )}
                 </div>
 
-                {/* Event Details & RSVP Button */}
                 <div className="p-6 flex flex-col justify-between space-y-6 flex-grow bg-neutral-950 border-t border-white/10">
                   <div className="space-y-3">
                     <h3 className="text-xl font-bold text-white tracking-tight">
@@ -228,7 +225,6 @@ export default function UpcomingEventsSection() {
         </div>
       </motion.div>
 
-      {/* RSVP Modal */}
       <AnimatePresence>
         {selectedEvent && (
           <motion.div

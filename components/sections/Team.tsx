@@ -44,7 +44,7 @@ const teamData: TeamData = {
     role: "Club Coordinator",
     image: tempurl,
     linkedin: "https://linkedin.com",
-    bio: "Leading overall club initiatives, strategic planning, and campus technical operations.",
+    bio: "",
   },
   domains: [
     {
@@ -56,7 +56,7 @@ const teamData: TeamData = {
         role: "Executive Member",
         image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691790/Ramakrishnan.jpg",
         linkedin: "https://linkedin.com",
-        bio: "Specializing in low-level systems engineering, C/C++ architectures, and OS tooling.",
+        bio: "  ",
       },
       coreMembers: [
         { id: "sys-c1", name: "Ritish", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691790/Rithish_S.jpg", linkedin: "https://linkedin.com" },
@@ -72,7 +72,7 @@ const teamData: TeamData = {
         role: "Executive Member",
         image: tempurl,
         linkedin: "https://linkedin.com",
-        bio: "Directing full-stack web platforms and Generative AI application architecture.",
+        bio: "  ",
       },
       coreMembers: [
         {
@@ -81,7 +81,7 @@ const teamData: TeamData = {
           role: "Core Member",
           image:"https://res.cloudinary.com/qkvtxvth/image/upload/v1791691791/Trishanku.jpg",
           linkedin: "https://linkedin.com",
-          bio: "Core developer building modern high-performance web interfaces and interactive AI tools.",
+          bio: "  ",
         },
         { id: "web-c2", name: "Akanksha", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791692405/Akanksha.jpg", linkedin: "https://linkedin.com" },
         { id: "web-c3", name: "Kartik", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691790/Karthik.jpg", linkedin: "https://linkedin.com" },
@@ -96,7 +96,7 @@ const teamData: TeamData = {
         role: "Executive Member",
         image: tempurl,
         linkedin: "https://linkedin.com",
-        bio: "Focusing on vulnerability analysis, penetration testing, and competitive CTF challenges.",
+        bio: "  ",
       },
       coreMembers: [
         { id: "cyber-c1", name: "Hemanth", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691788/Hemanth.heic", linkedin: "https://linkedin.com" },
@@ -115,7 +115,7 @@ const teamData: TeamData = {
         role: "Executive Member",
         image:"https://res.cloudinary.com/qkvtxvth/image/upload/v1791691789/Hetanshu.jpg",
         linkedin: "https://linkedin.com",
-        bio: "Managing club communications, outreach, and external sponsor relationships.",
+        bio: "  ",
       },
       coreMembers: [],
     },
@@ -128,7 +128,7 @@ const teamData: TeamData = {
         role: "Executive Member",
         image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691941/AryamanSaraf.jpg",
         linkedin: "https://linkedin.com",
-        bio: "Organizing hackathons, coding nights, and hands-on technical workshops.",
+        bio: "  ",
       },
       coreMembers: [
         { id: "events-c1", name: "Bhooshen", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791692808/Bhooshen.jpg", linkedin: "https://linkedin.com" },
