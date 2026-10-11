@@ -63,9 +63,9 @@ export default function InteractiveGridCanvas() {
     let cols = 0;
     let rows = 0;
 
+    //for diabling warp effect
     const checkIsOverCard = (clientX: number, clientY: number) => {
-      // Added "feedback-card" here so the background grid warp ignores mouse movement over the feedback section
-      const cardIds = ["about-card", "domains-card", "events-card", "upcoming-card", "team-card", "feedback-card", "footer-card"];
+     const cardIds = ["about-card", "domains-card", "events-card", "upcoming-card", "team-card", "feedback-card", "footer-card"];
       return cardIds.some((id) => {
         const el = document.getElementById(id);
         if (!el) return false;
@@ -79,7 +79,7 @@ export default function InteractiveGridCanvas() {
       });
     };
 
-    // Native resolution grid initialization
+    // native res grid
     const initGrid = () => {
       const dpr = window.devicePixelRatio || 1;
       width = window.innerWidth;
@@ -118,7 +118,7 @@ export default function InteractiveGridCanvas() {
 
     initGrid();
 
-    // Event listeners
+    // evnt listeners
     const handleResize = () => initGrid();
     window.addEventListener("resize", handleResize);
 
@@ -158,7 +158,8 @@ export default function InteractiveGridCanvas() {
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("dblclick", handleDblClick);
 
-    // Main render loop
+
+
     const render = () => {
       ctx.fillStyle = "#000000";
       ctx.fillRect(0, 0, width, height);
@@ -205,7 +206,7 @@ export default function InteractiveGridCanvas() {
       ctx.fillStyle = `rgba(255, 255, 162, ${GRID_BASE_ALPHA})`;
       ctx.fillRect(0, 0, width, height);
 
-      // Cursor spotlight glow
+      // cursor spotlight
       if (mouse.x > -1000) {
         const glowGradient = ctx.createRadialGradient(
           mouse.x,
@@ -296,7 +297,7 @@ export default function InteractiveGridCanvas() {
         }
       }
 
-      // Organic edge vignette
+      // edge vignette
       const applyOrganicVignetteStops = (grad: CanvasGradient) => {
         grad.addColorStop(0.00, "rgba(0, 0, 0, 1.0)");
         grad.addColorStop(0.20, "rgba(0, 0, 0, 0.75)");

@@ -11,7 +11,6 @@ import Footer from "@/components/sections/Footer";
 import PenguinMascot from "@/components/layout/PenguinMascot";
 import UpcomingEventsSection from "@/components/sections/RSVP";
 import FeedbackSection from "@/components/sections/Feedback";
-
 export default function Home() {
   const activeSection = useActiveSection();
 

@@ -15,7 +15,7 @@ const MASCOT_CONFIG: Record<
   about: {
     pose: "/mascot/talk.svg",
     snowmanText: "So Enigma is a Technical Club at IIIT Sricity known for its-",
-    penguinText: "So blah blah blah... They can read man! Let them..",
+    penguinText: "So blah blah blah... They can read man! Let them...",
   },
   domains: {
     pose: "/mascot/look.svg",
@@ -66,7 +66,7 @@ export default function PenguinMascot({ activeSection }: PenguinMascotProps) {
       const scrollHeight = document.documentElement.scrollHeight;
       const scrollPos = window.scrollY + window.innerHeight;
       const distanceFromBottom = scrollHeight - scrollPos;
-
+      //for last social icons prob
       const lift = distanceFromBottom < 140 ? 140 - distanceFromBottom : 0;
 
       mascotRef.current.style.transform = `translate3d(0, -${lift}px, 0)`;

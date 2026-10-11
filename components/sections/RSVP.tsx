@@ -3,6 +3,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, Clock, MapPin, CheckCircle2, X, Ticket, AlertCircle } from "lucide-react";
+import { db } from "@/lib/firebase";
+import { collection, getDocs, doc, setDoc, query } from "firebase/firestore";
+import { useAuth } from "@/app/context/authcntxt";
 
 interface UpcomingEvent {
   id: string;
@@ -11,26 +14,39 @@ interface UpcomingEvent {
   time: string;
   location: string;
   description: string;
-  category: string;
+  imageUrl?: string;
 }
 
-const upcomingEvents: UpcomingEvent[] = [
-  {
-    id: "ai-agent-workshop",
-    title: "The Bomb Lab",
-    date: "October 24, 2026",
-    time: "6:00 PM - 9:30 PM",
-    location: "G06",
-    description: "Learn all about Bomb Lab and cracking it with ease!",
-    category: "Computer Architecture",
-  },
-];
-
 export default function UpcomingEventsSection() {
+  const { user, profile } = useAuth();
+  const [events, setEvents] = useState<UpcomingEvent[]>([]);
+  const [loadingEvents, setLoadingEvents] = useState(true);
+
   const [selectedEvent, setSelectedEvent] = useState<UpcomingEvent | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", branch: "" });
   const [errorMsg, setErrorMsg] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Fetch events live from Firestore on load
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const querySnapshot = await getDocs(query(collection(db, "events")));
+        const fetchedEvents: UpcomingEvent[] = [];
+        querySnapshot.forEach((docSnap) => {
+          fetchedEvents.push({ id: docSnap.id, ...docSnap.data() } as UpcomingEvent);
+        });
+        setEvents(fetchedEvents);
+      } catch (err) {
+        console.error("Error fetching events:", err);
+      } finally {
+        setLoadingEvents(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
 
   useEffect(() => {
     if (selectedEvent) {
@@ -43,9 +59,14 @@ export default function UpcomingEventsSection() {
     };
   }, [selectedEvent]);
 
-  const handleRsvpSubmit = (e: React.FormEvent) => {
+  const handleRsvpSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg("");
+
+    if (!user || !selectedEvent) {
+      setErrorMsg("You must be logged in to RSVP.");
+      return;
+    }
 
     const trimmedName = formData.name.trim();
     const trimmedEmail = formData.email.trim();
@@ -66,15 +87,38 @@ export default function UpcomingEventsSection() {
       return;
     }
 
-    setIsSubmitted(true);
-    setTimeout(() => {
+    setIsSubmitting(true);
+
+    try {
+      const rsvpDocId = `${user.uid}_${selectedEvent.id}`;
+      const rsvpRef = doc(db, "rsvps", rsvpDocId);
+
+      await setDoc(rsvpRef, {
+        id: rsvpDocId,
+        userId: user.uid,
+        userName: trimmedName,
+        userEmail: trimmedEmail,
+        branch: formData.branch,
+        eventId: selectedEvent.id,
+        eventTitle: selectedEvent.title,
+        eventDate: selectedEvent.date,
+        timestamp: new Date().toISOString(),
+      });
+
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+
       setTimeout(() => {
         setIsSubmitted(false);
         setSelectedEvent(null);
         setFormData({ name: "", email: "", branch: "" });
         setErrorMsg("");
       }, 1500);
-    }, 1000);
+    } catch (err: any) {
+      setIsSubmitting(false);
+      console.error("RSVP error:", err);
+      setErrorMsg("Failed to save RSVP. Please try again.");
+    }
   };
 
   return (
@@ -90,9 +134,9 @@ export default function UpcomingEventsSection() {
         <div className="text-center space-y-2">
           <h2 className="text-4xl sm:text-6xl font-black text-white tracking-tight uppercase">
             Upcoming Events &
-            <span className= "text-transparent tracking-tight"> </span>
+            <span className="text-transparent tracking-tight"> </span>
             <span className="text-transparent [-webkit-text-stroke:1.5px_white] sm:[-webkit-text-stroke:2px_white]">
-               RSVP 
+              RSVP
             </span>
           </h2>
           <p className="text-sm sm:text-base text-lime-200 font-mono">
@@ -101,60 +145,90 @@ export default function UpcomingEventsSection() {
         </div>
 
         {/* Events Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {upcomingEvents.map((event) => (
-            <div
-              key={event.id}
-              className="rounded-2xl bg-black/60 border border-white/15 p-6 sm:p-8 flex flex-col justify-between group/item hover:border-lime-500/50 transition-all duration-300 shadow-lg space-y-6"
-            >
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="px-3 py-1 rounded-full bg-lime-500/10 border border-lime-500/30 text-lime-300 text-xs font-mono tracking-wider uppercase">
-                    {event.category}
-                  </span>
-                  <div className="flex items-center gap-1.5 text-neutral-400 text-xs font-mono">
-                    <Calendar className="w-3.5 h-3.5 text-lime-400" />
-                    <span>{event.date}</span>
-                  </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {loadingEvents ? (
+            <p className="text-xs font-mono text-neutral-400 col-span-full text-center py-8">
+              Loading events from database...
+            </p>
+          ) : events.length === 0 ? (
+            <p className="text-xs font-mono text-neutral-400 col-span-full text-center py-8">
+              No upcoming events currently scheduled. Check back soon!
+            </p>
+          ) : (
+            events.map((event) => (
+              <div
+                key={event.id}
+                className="rounded-2xl bg-black/60 border border-white/15 overflow-hidden flex flex-col justify-between group/item hover:border-white/30 transition-all duration-300 shadow-lg"
+              >
+                {/* Tall Poster Image Container matching Past Events */}
+                <div className="relative h-[480px] w-full overflow-hidden bg-neutral-900">
+                  {event.imageUrl ? (
+                    <img
+                      src={event.imageUrl}
+                      alt={event.title}
+                      className="w-full h-full object-cover group-hover/item:scale-105 transition-transform duration-300"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-neutral-500 font-mono text-xs">
+                      No Poster Available
+                    </div>
+                  )}
                 </div>
 
-                <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                  {event.title}
-                </h3>
+                {/* Event Details & RSVP Button */}
+                <div className="p-6 flex flex-col justify-between space-y-6 flex-grow bg-neutral-950 border-t border-white/10">
+                  <div className="space-y-3">
+                    <h3 className="text-xl font-bold text-white tracking-tight">
+                      {event.title}
+                    </h3>
 
-                <p className="text-sm text-neutral-300 leading-relaxed">
-                  {event.description}
-                </p>
+                    <p className="text-sm text-neutral-300 leading-relaxed line-clamp-3">
+                      {event.description}
+                    </p>
 
-                <div className="space-y-2 pt-2 border-t border-white/10 font-mono text-xs text-neutral-400">
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-lime-400" />
-                    <span>{event.time}</span>
+                    <div className="space-y-1.5 pt-3 border-t border-white/10 font-mono text-xs text-neutral-400">
+                      <div className="flex items-center gap-2">
+                        <Calendar className="w-3.5 h-3.5 text-lime-400 shrink-0" />
+                        <span>{event.date}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-3.5 h-3.5 text-lime-400 shrink-0" />
+                        <span>{event.time}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-3.5 h-3.5 text-lime-400 shrink-0" />
+                        <span>{event.location}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-lime-400" />
-                    <span>{event.location}</span>
-                  </div>
+
+                  <button
+                    onClick={() => {
+                      if (!user) {
+                        alert("Please log in or sign up first using the top navigation bar to RSVP!");
+                        return;
+                      }
+                      setSelectedEvent(event);
+                      setErrorMsg("");
+                      setFormData({
+                        name: profile?.name || user.displayName || "",
+                        email: user.email || "",
+                        branch: "",
+                      });
+                    }}
+                    className="w-full py-3 px-4 rounded-xl bg-lime-500 hover:bg-lime-400 text-black font-bold tracking-wide transition-colors duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-lime-500/10"
+                  >
+                    <Ticket className="w-4 h-4" />
+                    <span>{user ? "RSVP Now" : "Login to RSVP"}</span>
+                  </button>
                 </div>
               </div>
-
-              <button
-                onClick={() => {
-                  setSelectedEvent(event);
-                  setErrorMsg("");
-                  setFormData({ name: "", email: "", branch: "" });
-                }}
-                className="w-full py-3 px-4 rounded-xl bg-lime-500 hover:bg-lime-400 text-black font-bold tracking-wide transition-colors duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-lime-500/10"
-              >
-                <Ticket className="w-4 h-4" />
-                <span>RSVP Now</span>
-              </button>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </motion.div>
 
-      {/* RSVP Modal with Sleek Dark Blur */}
+      {/* RSVP Modal */}
       <AnimatePresence>
         {selectedEvent && (
           <motion.div
@@ -184,7 +258,7 @@ export default function UpcomingEventsSection() {
                   <CheckCircle2 className="w-16 h-16 text-lime-400 mx-auto animate-bounce" />
                   <h3 className="text-2xl font-bold text-white">RSVP Confirmed!</h3>
                   <p className="text-sm text-neutral-300 font-mono">
-                    See you at {selectedEvent.title}. Check your inbox for details.
+                    See you at {selectedEvent.title}. Registration saved to database.
                   </p>
                 </div>
               ) : (
@@ -252,9 +326,10 @@ export default function UpcomingEventsSection() {
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 rounded-xl bg-lime-500 hover:bg-lime-400 text-black font-bold tracking-wide transition-colors duration-200 cursor-pointer shadow-lg shadow-lime-500/20"
+                    disabled={isSubmitting}
+                    className="w-full py-3.5 rounded-xl bg-lime-500 hover:bg-lime-400 text-black font-bold tracking-wide transition-colors duration-200 cursor-pointer shadow-lg shadow-lime-500/20 disabled:opacity-50"
                   >
-                    Confirm Registration
+                    {isSubmitting ? "Processing..." : "Confirm Registration"}
                   </button>
                 </form>
               )}

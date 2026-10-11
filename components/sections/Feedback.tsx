@@ -3,8 +3,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2, AlertCircle, Send } from "lucide-react";
+import { db } from "@/lib/firebase";
+import { collection, addDoc } from "firebase/firestore";
+import { useAuth } from "@/app/context/authcntxt";
 
 export default function FeedbackSection() {
+  const { user, profile } = useAuth();
+
   const [formData, setFormData] = useState({
     subject: "",
     message: "",
@@ -13,9 +18,15 @@ export default function FeedbackSection() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg("");
+
+    //auth check
+    if (!user) {
+      setErrorMsg("Please log in or sign up first using the top navigation bar to send feedback!");
+      return;
+    }
 
     const trimmedMessage = formData.message.trim();
 
@@ -31,7 +42,17 @@ export default function FeedbackSection() {
 
     setIsSubmitting(true);
 
-    setTimeout(() => {
+    try {
+      await addDoc(collection(db, "feedbacks"), {
+        subject: formData.subject,
+        message: trimmedMessage,
+        userId: user.uid,
+        userName: profile?.name || user.displayName || "Student",
+        userEmail: user.email,
+        userRole: profile?.role || "student",
+        timestamp: new Date().toISOString(),
+      });
+
       setIsSubmitting(false);
       setIsSubmitted(true);
       setFormData({ subject: "", message: "" });
@@ -39,7 +60,11 @@ export default function FeedbackSection() {
       setTimeout(() => {
         setIsSubmitted(false);
       }, 3000);
-    }, 800);
+    } catch (err: any) {
+      console.error("Feedback error:", err);
+      setIsSubmitting(false);
+      setErrorMsg("Failed to send feedback. Please try again.");
+    }
   };
 
   return (
@@ -66,7 +91,7 @@ export default function FeedbackSection() {
             <CheckCircle2 className="w-12 h-12 text-lime-400 mx-auto animate-bounce" />
             <h3 className="text-xl font-bold text-white">Feedback Received!</h3>
             <p className="text-xs text-neutral-300 font-mono">
-              Thank you for helping us improve.
+              Thank you for helping us improve!
             </p>
           </div>
         ) : (
@@ -96,7 +121,7 @@ export default function FeedbackSection() {
                   /dev/null (Last Event)
                 </option>
                 <option value="general" className="bg-neutral-900 text-white">
-                  General CLub Feedback
+                  General Club Feedback
                 </option>
                 <option value="website" className="bg-neutral-900 text-white">
                   About Website
@@ -113,7 +138,7 @@ export default function FeedbackSection() {
                 rows={4}
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                placeholder="Be as specific as possible..."
+                placeholder={user ? "Be as specific as possible..." : "Please log in to leave feedback..."}
                 className="w-full px-3.5 py-3 rounded-xl bg-neutral-900/90 border border-white/15 text-white placeholder-neutral-500 focus:outline-none focus:border-lime-500 text-xs font-mono resize-none"
               />
             </div>
@@ -124,7 +149,13 @@ export default function FeedbackSection() {
               className="w-full py-3.5 rounded-xl bg-lime-500 hover:bg-lime-400 text-black font-extrabold tracking-wider uppercase transition-colors duration-200 cursor-pointer shadow-lg shadow-lime-500/20 flex items-center justify-center gap-2 disabled:opacity-50 text-xs"
             >
               <Send className="w-4 h-4" />
-              <span>{isSubmitting ? "Submitting..." : "Submit Feedback"}</span>
+              <span>
+                {isSubmitting
+                  ? "Submitting..."
+                  : user
+                  ? "Submit Feedback"
+                  : "Login to Submit Feedback"}
+              </span>
             </button>
           </form>
         )}
