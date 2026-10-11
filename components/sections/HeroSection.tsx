@@ -39,6 +39,7 @@ export default function HeroSection() {
 
   return (
     <section
+      id="home"
       data-no-grid="true"
       className="relative min-h-screen flex flex-col items-center justify-center px-4 text-center select-none overflow-hidden z-10"
     >

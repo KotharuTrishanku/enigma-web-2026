@@ -38,10 +38,10 @@ export default function DomainsSection() {
     >
       <motion.div
         id="domains-card"
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 15 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
         className="w-full rounded-3xl bg-neutral-950/90 border border-white/15 p-8 sm:p-12 md:p-16 relative overflow-hidden group hover:border-lime-500/40 transition-colors duration-300 transform-gpu shadow-2xl"
       >
         <div className="text-center mb-12 sm:mb-16">
@@ -56,7 +56,6 @@ export default function DomainsSection() {
           </p>
         </div>
 
-        {/* Domains Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 relative z-10">
           {domains.map((domain, index) => {
             const Icon = domain.icon;
