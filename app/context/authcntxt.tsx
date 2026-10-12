@@ -1,7 +1,13 @@
 "use client";
-
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { onAuthStateChanged, User, signOut as firebaseSignOut } from "firebase/auth";
+import { 
+  onAuthStateChanged, 
+  User, 
+  signOut as firebaseSignOut,
+  updatePassword,
+  EmailAuthProvider,
+  reauthenticateWithCredential
+} from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 
@@ -17,6 +23,7 @@ interface AuthContextType {
   profile: UserProfile | null;
   loading: boolean;
   logout: () => Promise<void>;
+  changePassword: (currentPass: string, newPass: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -24,6 +31,7 @@ const AuthContext = createContext<AuthContextType>({
   profile: null,
   loading: true,
   logout: async () => {},
+  changePassword: async () => {},
 });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -67,8 +75,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await firebaseSignOut(auth);
   };
 
+  const changePassword = async (currentPass: string, newPass: string) => {
+    const currentUser = auth.currentUser;
+    if (!currentUser || !currentUser.email) {
+      throw new Error("No authenticated user found.");
+    }
+    const credential = EmailAuthProvider.credential(currentUser.email, currentPass);
+    await reauthenticateWithCredential(currentUser, credential);
+    await updatePassword(currentUser, newPass);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, profile, loading, logout }}>
+    <AuthContext.Provider value={{ user, profile, loading, logout, changePassword }}>
       {children}
     </AuthContext.Provider>
   );

@@ -114,11 +114,11 @@ export default function FeedbackSection() {
                 className="w-full px-3.5 py-2.5 rounded-xl bg-neutral-900/90 border border-white/15 text-white focus:outline-none focus:border-lime-500 text-xs font-mono cursor-pointer"
               >
                 <option value="" disabled>What is this regarding?</option>
-                <option value="upcoming-the-bomb-lab" className="bg-neutral-900 text-white">
-                  The Bomb Lab (Upcoming Event)
+                <option value="upcoming-event" className="bg-neutral-900 text-white">
+                  Upcoming Event
                 </option>
-                <option value="past-dev-null" className="bg-neutral-900 text-white">
-                  /dev/null (Last Event)
+                <option value="last-event" className="bg-neutral-900 text-white">
+                  Last Event
                 </option>
                 <option value="general" className="bg-neutral-900 text-white">
                   General Club Feedback
