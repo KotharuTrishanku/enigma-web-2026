@@ -28,6 +28,13 @@ const domains = [
       "Crafting narratives, managing perception, and building strong public identities through clear communication and strategic outreach.",
     icon: Megaphone,
   },
+  {
+    title: "Event Management & Sponsorship",
+    description:
+      "Crafting narratives, managing perception, and building strong public identities through clear communication and strategic outreach.",
+    icon: Megaphone,
+  },
+  
 ];
 
 export default function DomainsSection() {
@@ -69,7 +76,7 @@ export default function DomainsSection() {
                 className="group/card relative rounded-2xl bg-black/50 border border-white/15 p-6 sm:p-8 hover:border-white-500/40 transition-all duration-100 hover:shadow-[0_0_25px_rgba(163,230,53,0.12)] flex flex-col justify-between overflow-hidden"
               >
                 <div>
-                  <div className="flex items-center gap-3 mb-4">
+                  <div className="flex align-middle items-center gap-3 mb-4">
                     <div className="p-2.5 rounded-xl bg-lime-500/10 border border-lime-500/20 text-lime-400 group-hover/card:scale-110 group-hover/card:bg-lime-500/20 transition-all duration-300">
                       <Icon className="w-6 h-6" />
                     </div>

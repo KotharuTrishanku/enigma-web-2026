@@ -1,8 +1,7 @@
 "use client";
-
 import { useState, useEffect } from "react";
 
-const SECTION_IDS = ["home", "about", "domains", "rsvp", "events", "team", "socials"];
+const SECTION_IDS = ["home", "about", "domains", "rsvp", "events", "team","feedback", "socials"];
 
 export function useActiveSection() {
   const [activeSection, setActiveSection] = useState("home");
@@ -29,7 +28,7 @@ export function useActiveSection() {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Initial check on load
+    handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);

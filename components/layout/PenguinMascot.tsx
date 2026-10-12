@@ -10,12 +10,12 @@ const MASCOT_CONFIG: Record<
   home: {
     pose: "/mascot/start.svg",
     snowmanText: "Ah, welcome to ENIGMA's Stronghold, traveler!",
-    penguinText: "Let's show them around—Woahh look at the magnificent engineering in the background!",
+    penguinText: "Let's show them around — Woahh look at the magnificent engineering in the background!",
   },
   about: {
     pose: "/mascot/talk.svg",
     snowmanText: "So Enigma is a Technical Club at IIIT Sricity known for its-",
-    penguinText: "So blah blah blah... They can read man! Let them..",
+    penguinText: "So blah blah blah... They can read man! Let them...",
   },
   domains: {
     pose: "/mascot/look.svg",
@@ -24,8 +24,8 @@ const MASCOT_CONFIG: Record<
   },
   rsvp: {
     pose: "/mascot/talk.svg",
-    snowmanText: "Make certain you register in time, old chap.",
-    penguinText: "Don't miss out on the slots—lock it in!",
+    snowmanText: "Make certain you register in time-",
+    penguinText: "I wanna go too man, why do only humans get these",
   },
   events: {
     pose: "/mascot/look.svg",
@@ -36,6 +36,11 @@ const MASCOT_CONFIG: Record<
     pose: "/mascot/start.svg",
     penguinText: "So these are the juicy brains behind the club.",
     snowmanText: "Click on any member to peek at their Stats!",
+  },
+  feedback: {
+    pose: "/mascot/start.svg",
+    snowmanText: "Got any constructive suggestions for us or our events?",
+    penguinText: "Spill the tea! Just enter whatever you felt. You'll be Anonymous to the team",
   },
   socials: {
     pose: "/mascot/talk.svg",
@@ -61,7 +66,7 @@ export default function PenguinMascot({ activeSection }: PenguinMascotProps) {
       const scrollHeight = document.documentElement.scrollHeight;
       const scrollPos = window.scrollY + window.innerHeight;
       const distanceFromBottom = scrollHeight - scrollPos;
-
+      //for last social icons prob
       const lift = distanceFromBottom < 140 ? 140 - distanceFromBottom : 0;
 
       mascotRef.current.style.transform = `translate3d(0, -${lift}px, 0)`;
@@ -96,11 +101,10 @@ export default function PenguinMascot({ activeSection }: PenguinMascotProps) {
       ref={mascotRef}
       className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-2.5 pointer-events-none select-none transform-gpu will-change-transform"
     >
-      {/* Separate Speech Bubbles */}
       <AnimatePresence mode="wait">
         {isOpen && (
           <div className="flex flex-col gap-2 items-end pointer-events-auto mr-2 sm:mr-4">
-            {/* Snowman Bubble */}
+
             <motion.div
               key={`snowman-${activeSection}`}
               initial={{ opacity: 0 }}
@@ -115,7 +119,6 @@ export default function PenguinMascot({ activeSection }: PenguinMascotProps) {
               <p className="leading-snug">{currentMascot.snowmanText}</p>
             </motion.div>
 
-            {/* Penguin Bubble */}
             <motion.div
               key={`penguin-${activeSection}`}
               initial={{ opacity: 0 }}

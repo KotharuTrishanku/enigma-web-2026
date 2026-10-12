@@ -1,0 +1,76 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function getUserRole() {
+      return exists(/databases/$(database)/documents/users/$(request.auth.uid)) 
+        ? get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role 
+        : 'student';
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && getUserRole() == 'admin';
+    }
+    
+    function isCoreOrAdmin() {
+      return isAuthenticated() && (getUserRole() == 'core' || getUserRole() == 'admin');
+    }
+
+    match /users/{userId} {
+      // Core & Admins can read roster; Students can only read their own profile (protects PII)
+      allow read: if isCoreOrAdmin() || (isAuthenticated() && request.auth.uid == userId);
+      
+      // Admins can create core members; Students can only self-register forced as 'student'
+      allow create: if isAdmin() || (
+        isAuthenticated() 
+        && request.auth.uid == userId 
+        && request.resource.data.role == 'student'
+      );
+      
+      // Admins can update any user; Students can update own profile, but CANNOT escalate their role
+      allow update: if isAdmin() || (
+        isAuthenticated() 
+        && request.auth.uid == userId 
+        && request.resource.data.role == resource.data.role
+      );
+      
+      // Only admins can delete user records
+      allow delete: if isAdmin();
+    }
+
+
+    match /attendanceConfig/{configId} {
+      allow read: if isCoreOrAdmin();
+      allow write: if isAdmin();
+    }
+
+    match /feedbacks/{feedbackId} {
+      // Authenticated users can submit feedback; userId must match their own auth UID (prevents spoofing)
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      // Only Core members and Admins can view, review, or delete feedbacks
+      allow read, update, delete: if isCoreOrAdmin();
+    }
+    
+    match /events/{eventId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /pastEvents/{eventId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+    match /rsvps/{rsvpId} {
+      // Core/Admin can read all attendees; Students can read their own RSVP
+      allow read: if isCoreOrAdmin() || (isAuthenticated() && resource.data.userId == request.auth.uid);
+      // Students can create their own RSVP with verified userId
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      // Only Admins can modify or cancel registrations
+      allow update, delete: if isAdmin();
+    }
+  }
+}

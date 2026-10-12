@@ -32,10 +32,6 @@ function LinkedinIcon({ className }: { className?: string }) {
   );
 }
 
-const tempurl =
-  "https://static.vecteezy.com/system/resources/thumbnails/004/511/281/small/default-avatar-photo-placeholder-profile-picture-vector.jpg";
-
-const now = "/me.jpg";
 
 const teamData: TeamData = {
   coordinator: {
@@ -81,7 +77,7 @@ const teamData: TeamData = {
           role: "Core Member",
           image:"https://res.cloudinary.com/qkvtxvth/image/upload/v1791691791/Trishanku.jpg",
           linkedin: "https://linkedin.com",
-          bio: "Watch Sunrise atleast once a day",
+          bio: "If you love something, Set it free. Unless it's a tiger.",
         },
         { id: "web-c2", name: "Akanksha", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791692405/Akanksha.jpg", linkedin: "https://linkedin.com",bio: "Debugging my life :|", },
         { id: "web-c3", name: "Kartik", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691790/Karthik.jpg", linkedin: "https://linkedin.com",bio: "It's Hero Time", },
@@ -199,8 +195,7 @@ function MemberCard({ member }: { member: Member }) {
             </div>
 
             <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-sans line-clamp-4">
-              {member.bio ||
-                "Core contributor actively developing projects and technology initiatives at ENIGMA IIIT Sri City."}
+              {member.bio}
             </p>
           </div>
 
