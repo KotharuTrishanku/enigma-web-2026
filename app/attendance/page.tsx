@@ -5,17 +5,17 @@ import { useRouter } from "next/navigation";
 import { auth, db } from "@/lib/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, collection, getDocs, updateDoc, setDoc, query, where } from "firebase/firestore";
-import { ShieldCheck, ArrowLeft, RotateCw, Plus, CheckSquare, Square, Calendar, UserPlus } from "lucide-react";
+import { ShieldCheck, ArrowLeft, RotateCw, Plus, CheckSquare, Square, Calendar } from "lucide-react";
 import Link from "next/link";
 
 interface Member {
   id: string;
   name: string;
-  rollNumber: string;
-  ugBatch: string;
+  rollNumber?: string;
+  ugBatch?: string;
   email: string;
-  contact: string;
-  domain: string;
+  contact?: string;
+  domain?: string;
   attendance: Record<string, boolean>;
 }
 
@@ -29,11 +29,10 @@ export default function AttendanceAdminPage() {
   
   const [newSessionDate, setNewSessionDate] = useState("");
   const [showAddSessionModal, setShowAddSessionModal] = useState(false);
-  const [showAddMemberModal, setShowAddMemberModal] = useState(false);
   
-  const [newMember, setNewMember] = useState({ name: "", rollNumber: "", ugBatch: "UG-2", email: "", contact: "", domain: "Web Engineering & Gen AI" });
   const router = useRouter();
 
+  // 1. Authenticate user and verify STRICT Admin role
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (!user) {
@@ -67,6 +66,7 @@ export default function AttendanceAdminPage() {
     return () => unsubscribe();
   }, [router]);
 
+  // 2. Fetch Sessions & Existing Core Members from Firestore
   const fetchData = async () => {
     setLoadingData(true);
     try {
@@ -82,10 +82,10 @@ export default function AttendanceAdminPage() {
         list.push({
           id: docSnap.id,
           name: d.name || d.displayName || "Unknown",
-          rollNumber: d.rollNumber || d.rollNo || "",
+          rollNumber: d.rollNumber || d.rollNo || "N/A",
           ugBatch: d.ugBatch || d.batch || "UG-2",
           email: d.email || "",
-          contact: d.contact || d.phone || "",
+          contact: d.contact || d.phone || "N/A",
           domain: d.domain || "Core Team",
           attendance: d.attendance || {},
         });
@@ -99,6 +99,7 @@ export default function AttendanceAdminPage() {
     }
   };
 
+  // Toggle attendance status for an existing user document in Firestore
   const toggleAttendance = async (memberId: string, date: string) => {
     const member = members.find((m) => m.id === memberId);
     if (!member) return;
@@ -123,6 +124,7 @@ export default function AttendanceAdminPage() {
     }
   };
 
+  // Add new session date column
   const handleAddSession = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newSessionDate) return;
@@ -139,32 +141,7 @@ export default function AttendanceAdminPage() {
     }
   };
 
-  const handleAddMember = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newMember.name) return;
-
-    const memberId = `member_${Date.now()}`;
-    const newDoc: Member = {
-      id: memberId,
-      ...newMember,
-      attendance: {},
-    };
-
-    setMembers((prev) => [...prev, newDoc]);
-    setShowAddMemberModal(false);
-    setNewMember({ name: "", rollNumber: "", ugBatch: "UG-2", email: "", contact: "", domain: "Web Engineering & Gen AI" });
-
-    try {
-      await setDoc(doc(db, "users", memberId), {
-        ...newMember,
-        role: "core",
-        attendance: {},
-      });
-    } catch (err) {
-      console.error("Error adding member:", err);
-    }
-  };
-
+  // KPI Calculations
   const totalMembers = members.length;
   const totalSessions = sessions.length;
   const totalPossible = totalMembers * totalSessions;
@@ -186,9 +163,10 @@ export default function AttendanceAdminPage() {
 
   const overallRate = totalPossible > 0 ? (totalAttendedCount / totalPossible) * 100 : 0;
 
-  const domains = Array.from(new Set(members.map((m) => m.domain)));
+  // Domain Statistics Breakdown
+  const domains = Array.from(new Set(members.map((m) => m.domain || "Core Team")));
   const domainStats = domains.map((d) => {
-    const domainMembers = members.filter((m) => m.domain === d);
+    const domainMembers = members.filter((m) => (m.domain || "Core Team") === d);
     const headcount = domainMembers.length;
     let totalAttended = 0;
     domainMembers.forEach((m) => {
@@ -221,22 +199,15 @@ export default function AttendanceAdminPage() {
         <div>
           <div className="flex items-center gap-2">
             <span className="px-2 py-0.5 rounded-md bg-slate-900 border border-slate-700 text-slate-300 text-xs flex items-center gap-1">
-              <h1 className="w-3.5 h-5.5 text-slate-400" /> Enigma Core Member Attendance
+              <ShieldCheck className="w-3.5 h-3.5 text-slate-400" /> Enigma Admin Attendance Roster
             </span>
           </div>
-          
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-slate-400 mt-1">
             Official Core Member Attendance & Domain Performance Roster • AY 2026–2027
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          <button
-            onClick={() => setShowAddMemberModal(true)}
-            className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-xs text-slate-100 transition-colors flex items-center gap-1.5 cursor-pointer font-bold"
-          >
-            <UserPlus className="w-3.5 h-3.5 text-slate-300" /> Add Member
-          </button>
           <button
             onClick={() => setShowAddSessionModal(true)}
             className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-xs text-slate-100 transition-colors flex items-center gap-1.5 cursor-pointer font-bold"
@@ -259,6 +230,7 @@ export default function AttendanceAdminPage() {
         </div>
       </div>
 
+      {/* KPI Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="rounded-2xl bg-slate-950/80 border border-slate-800 p-4">
           <span className="text-[10px] text-slate-500 uppercase tracking-wider block">Total Members</span>
@@ -278,6 +250,7 @@ export default function AttendanceAdminPage() {
         </div>
       </div>
 
+      {/* Main Attendance Table */}
       <div className="rounded-2xl bg-slate-950 border border-slate-800 overflow-x-auto shadow-2xl">
         <table className="w-full text-left text-xs whitespace-nowrap">
           <thead className="bg-slate-900 border-b border-slate-800 text-slate-300 uppercase tracking-wider font-bold">
@@ -316,11 +289,11 @@ export default function AttendanceAdminPage() {
                 <tr key={member.id} className="hover:bg-slate-900/40 transition-colors">
                   <td className="py-3 px-4 text-center text-slate-500 border-r border-slate-900">{index + 1}</td>
                   <td className="py-3 px-4 font-bold text-white border-r border-slate-900">{member.name}</td>
-                  <td className="py-3 px-4 text-slate-400 border-r border-slate-900">{member.rollNumber}</td>
-                  <td className="py-3 px-4 text-slate-400 border-r border-slate-900">{member.ugBatch}</td>
+                  <td className="py-3 px-4 text-slate-400 border-r border-slate-900">{member.rollNumber || "N/A"}</td>
+                  <td className="py-3 px-4 text-slate-400 border-r border-slate-900">{member.ugBatch || "UG-2"}</td>
                   <td className="py-3 px-4 text-slate-400 border-r border-slate-900">{member.email}</td>
-                  <td className="py-3 px-4 text-slate-400 border-r border-slate-900">{member.contact}</td>
-                  <td className="py-3 px-4 text-slate-300 border-r border-slate-900">{member.domain}</td>
+                  <td className="py-3 px-4 text-slate-400 border-r border-slate-900">{member.contact || "N/A"}</td>
+                  <td className="py-3 px-4 text-slate-300 border-r border-slate-900">{member.domain || "Core Team"}</td>
 
                   {sessions.map((sessionDate) => {
                     const isPresent = !!member.attendance[sessionDate];
@@ -381,6 +354,7 @@ export default function AttendanceAdminPage() {
         </table>
       </div>
 
+      {/* Domain Performance Breakdown */}
       <div className="space-y-3 pt-4">
         <h3 className="text-sm font-bold uppercase tracking-wider text-slate-300">Domain Performance Breakdown</h3>
         <div className="rounded-2xl bg-slate-950 border border-slate-800 overflow-x-auto shadow-lg">
@@ -411,6 +385,7 @@ export default function AttendanceAdminPage() {
         </div>
       </div>
 
+      {/* Add Session Modal */}
       {showAddSessionModal && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 font-mono">
           <div className="bg-slate-950 border border-slate-800 rounded-2xl p-6 w-full max-w-md space-y-5 shadow-2xl">
@@ -428,53 +403,6 @@ export default function AttendanceAdminPage() {
               <div className="flex justify-end gap-3 pt-2">
                 <button type="button" onClick={() => setShowAddSessionModal(false)} className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300 cursor-pointer">Cancel</button>
                 <button type="submit" className="px-5 py-2 rounded-xl bg-slate-800 border border-slate-600 text-xs font-bold text-white cursor-pointer">Add Session</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {showAddMemberModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 font-mono">
-          <div className="bg-slate-950 border border-slate-800 rounded-2xl p-6 w-full max-w-md space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
-                <UserPlus className="w-4 h-4 text-slate-400" /> Add New Core Member
-              </h3>
-              <button onClick={() => setShowAddMemberModal(false)} className="text-slate-400 hover:text-white text-xs cursor-pointer">✕</button>
-            </div>
-            <form onSubmit={handleAddMember} className="space-y-3 text-xs">
-              <div>
-                <label className="text-slate-400 uppercase tracking-wider block mb-1">Full Name</label>
-                <input type="text" required placeholder="Member Name" value={newMember.name} onChange={(e) => setNewMember({ ...newMember, name: e.target.value })} className="w-full bg-black border border-slate-800 rounded-xl px-3 py-2 text-white" />
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <div>
-                  <label className="text-slate-400 uppercase tracking-wider block mb-1">Roll Number</label>
-                  <input type="text" placeholder="S20250010xxx" value={newMember.rollNumber} onChange={(e) => setNewMember({ ...newMember, rollNumber: e.target.value })} className="w-full bg-black border border-slate-800 rounded-xl px-3 py-2 text-white" />
-                </div>
-                <div>
-                  <label className="text-slate-400 uppercase tracking-wider block mb-1">UG Batch</label>
-                  <input type="text" placeholder="UG-2" value={newMember.ugBatch} onChange={(e) => setNewMember({ ...newMember, ugBatch: e.target.value })} className="w-full bg-black border border-slate-800 rounded-xl px-3 py-2 text-white" />
-                </div>
-              </div>
-              <div>
-                <label className="text-slate-400 uppercase tracking-wider block mb-1">Email ID</label>
-                <input type="email" placeholder="email@iiits.in" value={newMember.email} onChange={(e) => setNewMember({ ...newMember, email: e.target.value })} className="w-full bg-black border border-slate-800 rounded-xl px-3 py-2 text-white" />
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <div>
-                  <label className="text-slate-400 uppercase tracking-wider block mb-1">Contact Number</label>
-                  <input type="text" placeholder="Phone Number" value={newMember.contact} onChange={(e) => setNewMember({ ...newMember, contact: e.target.value })} className="w-full bg-black border border-slate-800 rounded-xl px-3 py-2 text-white" />
-                </div>
-                <div>
-                  <label className="text-slate-400 uppercase tracking-wider block mb-1">Domain</label>
-                  <input type="text" placeholder="Web / Cyber / etc." value={newMember.domain} onChange={(e) => setNewMember({ ...newMember, domain: e.target.value })} className="w-full bg-black border border-slate-800 rounded-xl px-3 py-2 text-white" />
-                </div>
-              </div>
-              <div className="flex justify-end gap-3 pt-3">
-                <button type="button" onClick={() => setShowAddMemberModal(false)} className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300">Cancel</button>
-                <button type="submit" className="px-5 py-2 rounded-xl bg-slate-800 border border-slate-600 font-bold text-white">Save Member</button>
               </div>
             </form>
           </div>
