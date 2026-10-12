@@ -32,18 +32,15 @@ function LinkedinIcon({ className }: { className?: string }) {
   );
 }
 
-const tempurl =
-  "https://static.vecteezy.com/system/resources/thumbnails/004/511/281/small/default-avatar-photo-placeholder-profile-picture-vector.jpg";
-
 
 const teamData: TeamData = {
   coordinator: {
     id: "coord-1",
     name: "Mohammed Kamran",
     role: "Club Coordinator",
-    image: tempurl,
+    image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791825109/Kamran.jpg",
     linkedin: "https://linkedin.com",
-    bio: "",
+    bio:  "-Building Production Grade Intelligent Systems-  Club Coordinator of Amazing Club 🙃",
   },
   domains: [
     {
@@ -55,11 +52,11 @@ const teamData: TeamData = {
         role: "Executive Member",
         image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691790/Ramakrishnan.jpg",
         linkedin: "https://linkedin.com",
-        bio: "",
+        bio: "I use Artix btw-",
       },
       coreMembers: [
-        { id: "sys-c1", name: "Ritish", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691790/Rithish_S.jpg", linkedin: "https://linkedin.com", bio: "" },
-        { id: "sys-c2", name: "Aadithya", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691795/Aadhithya.jpg", linkedin: "https://linkedin.com", bio: "" },
+        { id: "sys-c1", name: "Ritish", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691790/Rithish_S.jpg", linkedin: "https://linkedin.com",bio: "system.curiosity = true;", },
+        { id: "sys-c2", name: "Aadithya", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691795/Aadhithya.jpg", linkedin: "https://linkedin.com",bio: "I am that penguin", },
       ],
     },
     {
@@ -69,9 +66,9 @@ const teamData: TeamData = {
         id: "web-exec",
         name: "Mohammed Kamran",
         role: "Executive Member",
-        image: tempurl,
+        image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791825109/Kamran.jpg",
         linkedin: "https://linkedin.com",
-        bio: "",
+        bio: "Building Production Grade Intelligent Systems-  Club Coordinator of Amazing Club 🙃",
       },
       coreMembers: [
         {
@@ -80,10 +77,10 @@ const teamData: TeamData = {
           role: "Core Member",
           image:"https://res.cloudinary.com/qkvtxvth/image/upload/v1791691791/Trishanku.jpg",
           linkedin: "https://linkedin.com",
-          bio: "",
+          bio: "If you love something, Set it free. Unless it's a tiger.",
         },
-        { id: "web-c2", name: "Akanksha", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791692405/Akanksha.jpg", linkedin: "https://linkedin.com", bio: ""},
-        { id: "web-c3", name: "Kartik", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691790/Karthik.jpg", linkedin: "https://linkedin.com", bio: "" },
+        { id: "web-c2", name: "Akanksha", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791692405/Akanksha.jpg", linkedin: "https://linkedin.com",bio: "Debugging my life :|", },
+        { id: "web-c3", name: "Kartik", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691790/Karthik.jpg", linkedin: "https://linkedin.com",bio: "It's Hero Time", },
       ],
     },
     {
@@ -93,16 +90,16 @@ const teamData: TeamData = {
         id: "cyber-exec",
         name: "Pranjal",
         role: "Executive Member",
-        image: tempurl,
+        image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791827227/Pranjal.jpg",
         linkedin: "https://linkedin.com",
-        bio: "",
+        bio: "Procaffeinating",
       },
       coreMembers: [
-        { id: "cyber-c1", name: "Hemanth", role: "Core Member", image: tempurl, linkedin: "https://linkedin.com" , bio: ""},
-        { id: "cyber-c2", name: "Prajwal", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691790/Prajwal.jpg", linkedin: "https://linkedin.com" , bio: ""},
-        { id: "cyber-c3", name: "Hanvitha", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691789/Hanvitha.jpg", linkedin: "https://linkedin.com" , bio: ""},
-        { id: "cyber-c4", name: "Pardhu", role: "Core Member", image:"https://res.cloudinary.com/qkvtxvth/image/upload/v1791691790/Pardhu.jpg", linkedin: "https://linkedin.com" , bio: ""},
-        { id: "cyber-c5", name: "Naveen", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691789/Adwaith_Naveen.jpg", linkedin: "https://linkedin.com" , bio: ""},
+        { id: "cyber-c1", name: "Hemanth", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791714980/Hemanth.jpg", linkedin: "https://linkedin.com",bio: "Wake up to reality! Nothing ever goes as planned in this accursed world", },
+        { id: "cyber-c2", name: "Prajwal", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691790/Prajwal.jpg", linkedin: "https://linkedin.com",bio: "The most dangerous exploit is the one nobody suspects.", },
+        { id: "cyber-c3", name: "Hanvitha", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691789/Hanvitha.jpg", linkedin: "https://linkedin.com",bio: "Uhmm ntgg ://", },
+        { id: "cyber-c4", name: "Pardhu", role: "Core Member", image:"https://res.cloudinary.com/qkvtxvth/image/upload/v1791691790/Pardhu.jpg", linkedin: "https://linkedin.com",bio: "Flaws are inevitable. -R.Pardhu", },
+        { id: "cyber-c5", name: "Naveen", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691789/Adwaith_Naveen.jpg", linkedin: "https://linkedin.com",bio: "Did I tell you that I use Arch?", },
       ],
     },
     {
@@ -114,7 +111,7 @@ const teamData: TeamData = {
         role: "Executive Member",
         image:"https://res.cloudinary.com/qkvtxvth/image/upload/v1791691789/Hetanshu.jpg",
         linkedin: "https://linkedin.com",
-        bio: "",
+        bio: "Sleeping :)",
       },
       coreMembers: [],
     },
@@ -127,10 +124,10 @@ const teamData: TeamData = {
         role: "Executive Member",
         image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691941/AryamanSaraf.jpg",
         linkedin: "https://linkedin.com",
-        bio: "",
+        bio: "It's TOXIC GAMER",
       },
       coreMembers: [
-        { id: "events-c1", name: "Bhooshen", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791692808/Bhooshen.jpg", linkedin: "https://linkedin.com" , bio: ""},
+        { id: "events-c1", name: "Bhooshen", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791692808/Bhooshen.jpg", linkedin: "https://linkedin.com" ,bio: "Let them write my downfall. I want to see how they explain my comeback",},
       ],
     },
   ],
