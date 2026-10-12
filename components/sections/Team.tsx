@@ -98,7 +98,7 @@ const teamData: TeamData = {
         bio: "",
       },
       coreMembers: [
-        { id: "cyber-c1", name: "Hemanth", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691788/Hemanth.heic", linkedin: "https://linkedin.com" , bio: ""},
+        { id: "cyber-c1", name: "Hemanth", role: "Core Member", image: tempurl, linkedin: "https://linkedin.com" , bio: ""},
         { id: "cyber-c2", name: "Prajwal", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691790/Prajwal.jpg", linkedin: "https://linkedin.com" , bio: ""},
         { id: "cyber-c3", name: "Hanvitha", role: "Core Member", image: "https://res.cloudinary.com/qkvtxvth/image/upload/v1791691789/Hanvitha.jpg", linkedin: "https://linkedin.com" , bio: ""},
         { id: "cyber-c4", name: "Pardhu", role: "Core Member", image:"https://res.cloudinary.com/qkvtxvth/image/upload/v1791691790/Pardhu.jpg", linkedin: "https://linkedin.com" , bio: ""},

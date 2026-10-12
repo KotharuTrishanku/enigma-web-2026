@@ -51,7 +51,6 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }: A
     };
   }, [isOpen]);
 
-  // Google OAuth 2.0 Sign-In Handler
   const handleGoogleSignIn = async () => {
     setErrorMsg("");
     setIsLoading(true);
@@ -60,12 +59,10 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }: A
       const result = await signInWithPopup(auth, provider);
       const googleUser = result.user;
 
-      // Check if user already exists in Firestore
       const userDocRef = doc(db, "users", googleUser.uid);
       const userSnap = await getDoc(userDocRef);
 
       if (!userSnap.exists()) {
-        // Create default student profile for new Google sign-ins
         await setDoc(userDocRef, {
           uid: googleUser.uid,
           name: googleUser.displayName || "Enigma Member",
@@ -225,7 +222,6 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }: A
                 </p>
               </div>
 
-              {/* Google OAuth 2.0 Sign-In Button */}
               {authView === "form" && (
                 <>
                   <button
@@ -357,7 +353,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }: A
                           required
                           value={formData.newPassword}
                           onChange={(e) => setFormData({ ...formData, newPassword: e.target.value })}
-                          placeholder="••••••••"
+                          placeholder="Dont use password for your Password"
                           className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-neutral-900 border border-white/15 text-white placeholder-neutral-500 focus:outline-none focus:border-lime-500 text-xs font-mono"
                         />
                       </div>
@@ -379,7 +375,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }: A
                             required={!isLogin}
                             value={formData.name}
                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                            placeholder="Trishanku Kotharu"
+                            placeholder="Ben Dover"
                             className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-neutral-900 border border-white/15 text-white placeholder-neutral-500 focus:outline-none focus:border-lime-500 text-xs font-mono"
                           />
                         </div>
@@ -414,7 +410,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }: A
                           required
                           value={formData.password}
                           onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                          placeholder="••••••••"
+                          placeholder="Dont use password for your Password"
                           className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-neutral-900 border border-white/15 text-white placeholder-neutral-500 focus:outline-none focus:border-lime-500 text-xs font-mono"
                         />
                       </div>
