@@ -69,7 +69,7 @@ export default function FooterSection() {
     <footer id="socials" className="relative max-w-7xl mx-auto px-2 sm:px-8 pt-16 pb-12 z-10">
      <div className="text-center space-y-3 mb-12 sm:mb-16 max-w-3xl mx-auto px-4">
         <p className="text-sm sm:text-base md:text-lg text-lime-600 font-semibold font-mono leading-relaxed tracking-wide">
-          Chaos Follows Wherever you <span className = "text-lime-800">stride...</span>
+          <span className = "text-lime-800">Chaos</span> Follows Wherever you <span className = "text-lime-800">stride...</span>
           Though, <span className="text-lime-400">Time Heals Everything</span>  
         </p>
         <p className="text-sm sm:text-base md:text-lg text-lime-200 font-semibold font-mono leading-relaxed tracking-wide">

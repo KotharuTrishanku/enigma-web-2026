@@ -2,9 +2,10 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import AuthModal from "@/components/modals/Authmodal";
 import { useAuth } from "@/app/context/authcntxt";
-import { User as UserIcon, LogOut, KeyRound, ChevronDown } from "lucide-react";
+import { User as UserIcon, LogOut, KeyRound, ChevronDown, Calendar, MessageSquare } from "lucide-react";
 
 interface NavbarProps {
   activeSection?: string;
@@ -82,7 +83,6 @@ export default function Navbar({ activeSection = "home" }: NavbarProps) {
 
           {user ? (
             <div className="relative ml-2" ref={dropdownRef}>
-
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-lime-500/10 border border-lime-400/30 text-lime-300 text-xs font-mono cursor-pointer hover:bg-lime-500/20 transition-colors"
@@ -102,12 +102,34 @@ export default function Navbar({ activeSection = "home" }: NavbarProps) {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
                     transition={{ duration: 0.15, ease: "easeOut" }}
-                    className="absolute right-0 mt-2 w-48 rounded-2xl bg-neutral-950 border border-white/15 shadow-2xl overflow-hidden z-50 p-1.5 font-mono"
+                    className="absolute right-0 mt-2 w-52 rounded-2xl bg-neutral-950 border border-white/15 shadow-2xl overflow-hidden z-50 p-1.5 font-mono"
                   >
                     <div className="px-3 py-2 border-b border-white/10 mb-1">
                       <p className="text-[10px] text-neutral-400 uppercase tracking-wider">Signed in as</p>
                       <p className="text-xs text-white font-bold truncate">{user.email}</p>
                     </div>
+
+                    {profile?.role === "admin" && (
+                      <Link
+                        href="/attendance"
+                        onClick={() => setIsDropdownOpen(false)}
+                        className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs text-neutral-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer text-left"
+                      >
+                        <Calendar className="w-3.5 h-3.5 text-lime-400" />
+                        <span>Attendance Management</span>
+                      </Link>
+                    )}
+
+                    {(profile?.role === "admin" || profile?.role === "core") && (
+                      <Link
+                        href="/feedbacks"
+                        onClick={() => setIsDropdownOpen(false)}
+                        className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs text-neutral-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer text-left"
+                      >
+                        <MessageSquare className="w-3.5 h-3.5 text-lime-400" />
+                        <span>Feedbacks</span>
+                      </Link>
+                    )}
 
                     <button
                       onClick={() => openAuth("change")}
@@ -116,6 +138,8 @@ export default function Navbar({ activeSection = "home" }: NavbarProps) {
                       <KeyRound className="w-3.5 h-3.5 text-lime-400" />
                       <span>Change Password</span>
                     </button>
+
+                    <div className="border-t border-white/10 my-1"></div>
 
                     <button
                       onClick={() => {

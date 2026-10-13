@@ -219,8 +219,8 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }: A
                     : authView === "change"
                     ? "Update your account password securely"
                     : isLogin 
-                    ? "Access your RSVPs & portal" 
-                    : "Create your student account"}
+                    ? "" 
+                    : ""}
                 </p>
               </div>
 

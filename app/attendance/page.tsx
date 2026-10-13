@@ -32,7 +32,6 @@ export default function AttendanceAdminPage() {
   
   const router = useRouter();
 
-  // 1. Authenticate user and verify STRICT Admin role
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (!user) {
@@ -66,7 +65,8 @@ export default function AttendanceAdminPage() {
     return () => unsubscribe();
   }, [router]);
 
-  // 2. Fetch Sessions & Existing Core Members from Firestore
+
+
   const fetchData = async () => {
     setLoadingData(true);
     try {
@@ -99,7 +99,9 @@ export default function AttendanceAdminPage() {
     }
   };
 
-  // Toggle attendance status for an existing user document in Firestore
+  
+
+
   const toggleAttendance = async (memberId: string, date: string) => {
     const member = members.find((m) => m.id === memberId);
     if (!member) return;
@@ -123,8 +125,6 @@ export default function AttendanceAdminPage() {
       fetchData();
     }
   };
-
-  // Add new session date column
   const handleAddSession = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newSessionDate) return;
@@ -141,7 +141,6 @@ export default function AttendanceAdminPage() {
     }
   };
 
-  // KPI Calculations
   const totalMembers = members.length;
   const totalSessions = sessions.length;
   const totalPossible = totalMembers * totalSessions;
@@ -163,7 +162,6 @@ export default function AttendanceAdminPage() {
 
   const overallRate = totalPossible > 0 ? (totalAttendedCount / totalPossible) * 100 : 0;
 
-  // Domain Statistics Breakdown
   const domains = Array.from(new Set(members.map((m) => m.domain || "Core Team")));
   const domainStats = domains.map((d) => {
     const domainMembers = members.filter((m) => (m.domain || "Core Team") === d);
@@ -194,16 +192,13 @@ export default function AttendanceAdminPage() {
   return (
     <main className="min-h-screen bg-black text-white p-4 sm:p-8 font-mono space-y-6">
       
-      {/* Top Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-slate-800 pb-5 gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 rounded-md bg-slate-900 border border-slate-700 text-slate-300 text-xs flex items-center gap-1">
-              <ShieldCheck className="w-3.5 h-3.5 text-slate-400" /> Enigma Admin Attendance Roster
-            </span>
+            
           </div>
-          <p className="text-xs text-slate-400 mt-1">
-            Official Core Member Attendance & Domain Performance Roster • AY 2026–2027
+          <p className="text-xl text-slate-400 mt-1">
+            CORE MEMBER ATTENDANCE
           </p>
         </div>
 
@@ -230,7 +225,6 @@ export default function AttendanceAdminPage() {
         </div>
       </div>
 
-      {/* KPI Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="rounded-2xl bg-slate-950/80 border border-slate-800 p-4">
           <span className="text-[10px] text-slate-500 uppercase tracking-wider block">Total Members</span>
@@ -250,7 +244,6 @@ export default function AttendanceAdminPage() {
         </div>
       </div>
 
-      {/* Main Attendance Table */}
       <div className="rounded-2xl bg-slate-950 border border-slate-800 overflow-x-auto shadow-2xl">
         <table className="w-full text-left text-xs whitespace-nowrap">
           <thead className="bg-slate-900 border-b border-slate-800 text-slate-300 uppercase tracking-wider font-bold">
@@ -354,7 +347,6 @@ export default function AttendanceAdminPage() {
         </table>
       </div>
 
-      {/* Domain Performance Breakdown */}
       <div className="space-y-3 pt-4">
         <h3 className="text-sm font-bold uppercase tracking-wider text-slate-300">Domain Performance Breakdown</h3>
         <div className="rounded-2xl bg-slate-950 border border-slate-800 overflow-x-auto shadow-lg">
@@ -385,7 +377,6 @@ export default function AttendanceAdminPage() {
         </div>
       </div>
 
-      {/* Add Session Modal */}
       {showAddSessionModal && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 font-mono">
           <div className="bg-slate-950 border border-slate-800 rounded-2xl p-6 w-full max-w-md space-y-5 shadow-2xl">

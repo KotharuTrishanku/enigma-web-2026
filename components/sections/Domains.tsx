@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Cpu, Globe, ShieldCheck, Megaphone } from "lucide-react";
+import { Cpu, Globe, ShieldCheck, Megaphone, Calendar } from "lucide-react";
 
 const domains = [
   {
@@ -31,10 +31,9 @@ const domains = [
   {
     title: "Event Management & Sponsorship",
     description:
-      "Crafting narratives, managing perception, and building strong public identities through clear communication and strategic outreach.",
-    icon: Megaphone,
+      "Coordinating major tech events, managing logistics, and securing corporate partnerships to power club initiatives and hackathons.",
+    icon: Calendar,
   },
-  
 ];
 
 export default function DomainsSection() {
@@ -66,6 +65,8 @@ export default function DomainsSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 relative z-10">
           {domains.map((domain, index) => {
             const Icon = domain.icon;
+            const isLast = index === domains.length - 1;
+
             return (
               <motion.div
                 key={domain.title}
@@ -73,7 +74,9 @@ export default function DomainsSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.1, ease: "easeOut" }}
-                className="group/card relative rounded-2xl bg-black/50 border border-white/15 p-6 sm:p-8 hover:border-white-500/40 transition-all duration-100 hover:shadow-[0_0_25px_rgba(163,230,53,0.12)] flex flex-col justify-between overflow-hidden"
+                className={`group/card relative rounded-2xl bg-black/50 border border-white/15 p-6 sm:p-8 hover:border-white-500/40 transition-all duration-100 hover:shadow-[0_0_25px_rgba(163,230,53,0.12)] flex flex-col justify-between overflow-hidden ${
+                  isLast ? "md:col-span-2 md:max-w-xl md:mx-auto md:w-full" : ""
+                }`}
               >
                 <div>
                   <div className="flex align-middle items-center gap-3 mb-4">
