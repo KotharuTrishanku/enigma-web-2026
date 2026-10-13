@@ -20,12 +20,14 @@ import { useAuth } from "@/app/context/authcntxt";
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
-  initialMode?: "login" | "signup";
+  initialMode?: "login" | "signup" | "change";
 }
 
 export default function AuthModal({ isOpen, onClose, initialMode = "signup" }: AuthModalProps) {
   const [isLogin, setIsLogin] = useState(initialMode === "login");
-  const [authView, setAuthView] = useState<"form" | "forgot" | "change">("form");
+  const [authView, setAuthView] = useState<"form" | "forgot" | "change">(
+    initialMode === "change" ? "change" : "form"
+  );
   const [formData, setFormData] = useState({ name: "", email: "", password: "", currentPassword: "", newPassword: "" });
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
@@ -35,7 +37,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }: A
 
   useEffect(() => {
     setIsLogin(initialMode === "login");
-    setAuthView("form");
+    setAuthView(initialMode === "change" ? "change" : "form");
     setErrorMsg("");
     setSuccessMsg("");
   }, [initialMode, isOpen]);
@@ -271,20 +273,13 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }: A
               )}
 
               {authView === "form" && isLogin && (
-                <div className="flex items-center justify-between px-1 text-[11px] font-mono text-neutral-400">
+                <div className="flex items-center justify-end px-1 text-[11px] font-mono text-neutral-400">
                   <button
                     type="button"
                     onClick={() => { setAuthView("forgot"); setErrorMsg(""); setSuccessMsg(""); }}
                     className="hover:text-lime-400 transition-colors cursor-pointer"
                   >
                     Forgot Password?
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => { setAuthView("change"); setErrorMsg(""); setSuccessMsg(""); }}
-                    className="hover:text-lime-400 transition-colors cursor-pointer"
-                  >
-                    Change Password?
                   </button>
                 </div>
               )}
@@ -336,7 +331,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }: A
                           required
                           value={formData.currentPassword}
                           onChange={(e) => setFormData({ ...formData, currentPassword: e.target.value })}
-                          placeholder="••••••••"
+                          placeholder="Hope this wasn't password"
                           className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-neutral-900 border border-white/15 text-white placeholder-neutral-500 focus:outline-none focus:border-lime-500 text-xs font-mono"
                         />
                       </div>
@@ -353,7 +348,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }: A
                           required
                           value={formData.newPassword}
                           onChange={(e) => setFormData({ ...formData, newPassword: e.target.value })}
-                          placeholder="Dont use password for your Password"
+                          placeholder="Again, Don't use password as your Password"
                           className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-neutral-900 border border-white/15 text-white placeholder-neutral-500 focus:outline-none focus:border-lime-500 text-xs font-mono"
                         />
                       </div>
@@ -410,7 +405,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "signup" }: A
                           required
                           value={formData.password}
                           onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                          placeholder="Dont use password for your Password"
+                          placeholder="Dont use password as your Password"
                           className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-neutral-900 border border-white/15 text-white placeholder-neutral-500 focus:outline-none focus:border-lime-500 text-xs font-mono"
                         />
                       </div>
