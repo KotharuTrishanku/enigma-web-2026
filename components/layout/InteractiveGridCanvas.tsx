@@ -79,6 +79,7 @@ export default function InteractiveGridCanvas() {
       });
     };
 
+
     // native res grid
     const initGrid = () => {
       const dpr = window.devicePixelRatio || 1;
@@ -117,6 +118,7 @@ export default function InteractiveGridCanvas() {
     };
 
     initGrid();
+
 
     // evnt listeners
     const handleResize = () => initGrid();
@@ -160,6 +162,7 @@ export default function InteractiveGridCanvas() {
 
 
 
+
     const render = () => {
       ctx.fillStyle = "#000000";
       ctx.fillRect(0, 0, width, height);
@@ -199,7 +202,7 @@ export default function InteractiveGridCanvas() {
           }
         }
       }
-
+      //20percent decay on mouse created velocity every frame
       mouse.vx *= 0.8;
       mouse.vy *= 0.8;
 
@@ -219,7 +222,7 @@ export default function InteractiveGridCanvas() {
 
         const peakGlow = GRID_MAX_ALPHA - GRID_BASE_ALPHA;
 
-        glowGradient.addColorStop(0, `rgba(255, 255, 255, ${peakGlow})`);
+        glowGradient.addColorStop(0, `rgba(255, 255, 255, ${peakGlow})`);//diff gradient positions for non linear sprd
         glowGradient.addColorStop(0.12, `rgba(255, 255, 255, ${peakGlow * 0.45})`);
         glowGradient.addColorStop(0.3, `rgba(255, 255, 255, ${peakGlow * 0.15})`);
         glowGradient.addColorStop(0.6, `rgba(255, 255, 255, ${peakGlow * 0.04})`);
